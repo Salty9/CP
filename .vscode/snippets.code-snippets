@@ -102,6 +102,112 @@
     "const int MOD = (int)1e9 + 7; // change accoridngly",
     "using mint = Mint<MOD,5>;"
   ],
-  "description": "modular int"
-    }
+    "description": "modular int"
+    },
+
+  "Policy based ds": {
+  "prefix": "pbds",
+  "body": [
+    "#include <bits/extc++.h>",
+    "using namespace __gnu_pbds;",
+    "",
+    "template<class T>",
+    "using Tree = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;",
+    "// Usage: Tree<int> t; order_of_key, find_by_order",
+    ""
+  ],
+	"description": "Policy based ds"
+    },
+
+	"gp_hash_table": {
+  "prefix": "gp_hash",
+  "body": [
+    "#include <ext/pb_ds/assoc_container.hpp> ",
+    "using namespace __gnu_pbds;",
+    "  ",
+    "struct custom_hash {",
+    "    static uint64_t splitmix64(uint64_t x) {",
+    "        x += 0x9e3779b97f4a7c15;",
+    "        x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;",
+    "        x = (x ^ (x >> 27)) * 0x94d049bb133111eb;",
+    "        return x ^ (x >> 31);",
+    "    }",
+    " ",
+    "    size_t operator()(uint64_t x) const {",
+    "        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();",
+    "        return splitmix64(x + FIXED_RANDOM);",
+    "    }",
+    "};",
+    " ",
+    "template<typename S, typename T>",
+    "using hash_table = gp_hash_table<S, T, custom_hash>;",
+    "// Usage: hashtable<int, int> for map<int, int> basically",
+    "// replacement for unordered_set<K>, use gp_hash_table<K, null_type>",
+    "// Note: the operator needs to be able to hash the typename S"
+  ],
+  "description": "gp_hash_table"
+	},
+
+
+	"segment tree": {
+  "prefix": "segtree",
+  "body": [
+    "template<class T> struct Segtree {",
+    "   // initialize ID if need nonzero & define cmb so that cmb(ID,b) = b",
+    "    const T ID{};",
+    "    T cmb(T a, T b) {",
+    "        return a+b; ",
+    "    } ",
+    "    int n; vector<T> seg;",
+    "    Segtree(int sz){ init(sz); } // just call init if i pass in size ",
+    "    Segtree(){} // nothing if i dont pass stuff",
+    "    void init(int _n) { // upd, query also work if n = _n",
+    "        for (n = 1; n < _n; ) n *= 2; ",
+    "        seg.assign(2*n,ID); }",
+    "    void pull(int p) { seg[p] = cmb(seg[2*p],seg[2*p+1]); }",
+    "    void upd(int p, T val) {  // set val at position p [0 idx]",
+    "        seg[p += n] = val; for (p /= 2; p; p /= 2) pull(p); }",
+    "    T query(int l, int r) {    // zero-indexed, inclusive",
+    "        T ra = ID, rb = ID;",
+    "        for (l += n, r += n+1; l < r; l /= 2, r /= 2) {",
+    "            if (l&1) ra = cmb(ra,seg[l++]);",
+    "            if (r&1) rb = cmb(seg[--r],rb);",
+    "        }",
+    "        return cmb(ra,rb);",
+    "    }",
+    "    /// int first_at_least(int lo, int val, int ind, int l, int r) { // if seg stores max across range",
+    "    ///     if (r < lo || val > seg[ind]) return -1;",
+    "    ///     if (l == r) return l;",
+    "    ///     int m = (l+r)/2;",
+    "    ///     int res = first_at_least(lo,val,2*ind,l,m); if (res != -1) return res;",
+    "    ///     return first_at_least(lo,val,2*ind+1,m+1,r);",
+    "    /// }",
+    "};",
+    "// usage: Segtree<int> seg; seg.init(n); if you want to init later",
+    "// OR Segtree<int> seg(n);"
+  ],
+  "description": "segment tree" 
+	},
+
+	"DSU": {
+  "prefix": "dsu",
+  "body": [
+    "struct Dsu {",
+    "    vector<int> p;",
+    "    Dsu(int n) : p(n, -1) {}",
+    "    bool sameSet(int a, int b) { return find(a) == find(b); }",
+    "    int size(int x) { return -p[find(x)]; }",
+    "    int find(int x) { return p[x] < 0 ? x : p[x] = find(p[x]); }",
+    "    bool unite(int a, int b) {",
+    "        a = find(a), b = find(b);",
+    "        if (a == b) return false;",
+    "        if (p[a] > p[b]) swap(a, b);",
+    "        p[a] += p[b]; p[b] = a;",
+    "        return true;",
+    "    }",
+    "};"
+  ],
+  "description": "DSU"
+	}
+	
 }
