@@ -1,6 +1,3 @@
-# Generates cp_snippets.json inside .vscode with snippets for VSCode
-# change its file format to .code-snippets
-
 import os
 import json
 import sys
@@ -33,4 +30,5 @@ for subdir in os.walk('.'):
 with open('.vscode/cp_snippets.json', 'w') as f:
   f.write(json.dumps(snippets, indent=2))
 
+os.rename('.vscode/cp_snippets.json', '.vscode/cp_snippets.code-snippets')
 print('done', file=sys.stderr)
