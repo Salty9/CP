@@ -26,7 +26,7 @@ template<class T> bool ckmax(T& a, T b){ return b > a ? a = b, 1 : 0; }
 
 
 void solve(int tc = 0) {
-$2
+    $2
 }
 
 int main() {

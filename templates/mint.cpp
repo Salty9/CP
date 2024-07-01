@@ -14,14 +14,9 @@ template<int MOD, int RT> struct Mint {
 	// friend void re(Mint& a) { ll x; re(x); a = Mint(x); }
 	// friend str ts(Mint a) { return ts(a.v); }
     
-	Mint& operator+=(const Mint& o) { 
-		if ((v += o.v) >= MOD) v -= MOD; 
-		return *this; }
-	Mint& operator-=(const mint& o) { 
-		if ((v -= o.v) < 0) v += MOD; 
-		return *this; }
-	Mint& operator*=(const Mint& o) { 
-		v = int((ll)v*o.v%MOD); return *this; }
+	Mint& operator+=(const Mint& o) { if ((v += o.v) >= MOD) v -= MOD; return *this; }
+	Mint& operator-=(const Mint& o) { if ((v -= o.v) < 0) v += MOD; return *this; }
+	Mint& operator*=(const Mint& o) { v = int((ll)v*o.v%MOD); return *this; }
 	Mint& operator/=(const Mint& o) { return (*this) *= inv(o); }
 	friend Mint pow(Mint a, ll p) {
 		Mint ans = 1; assert(p >= 0);
@@ -30,7 +25,7 @@ template<int MOD, int RT> struct Mint {
 	friend Mint inv(const Mint& a) { assert(a.v != 0); 
 		return pow(a,MOD-2); }
 		
-	Mint operator-() const { return mint(-v); }
+	Mint operator-() const { return Mint(-v); }
 	Mint& operator++() { return *this += 1; }
 	Mint& operator--() { return *this -= 1; }
 	friend Mint operator+(Mint a, const Mint& b) { return a += b; }
