@@ -1,4 +1,4 @@
-g++-14 -DLOCAL_PROJECT -std=c++20 $1.cpp -o $1 && ./$1 < input
+g++-14 -DLOCAL -std=c++20 $1.cpp -o $1 && ./$1 < input
 
 # Usage: bash build.sh filename_without_extension
 # Or put this in keybindings.json for keyboard shortcut

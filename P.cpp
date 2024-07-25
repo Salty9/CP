@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifdef LOCAL
-#include "algo/dbg.hpp"
+#ifdef LOCAL_PROJECT
+#include "debug.hpp"
 #else
 #define dbg(...)
 #endif
@@ -10,8 +10,8 @@ using namespace std;
 #define endl '\n'
 #define pb push_back
 #define all(v) v.begin(), v.end()
-#define rep(i,a,b) for (int i = (a); i < (b); ++i)
-#define rrep(i,a,b) for (int i = (a); i >= (b); --i)
+#define rep(i,a,b) for (int i = a; i < b; i++)
+#define rrep(i,a,b) for (int i = a; i >= b; i--)
 
 typedef long long ll;
 typedef pair<int, int> pii;
@@ -21,7 +21,11 @@ template<class T> bool ckmax(T& a, T b){ return b > a ? a = b, 1 : 0; }
 template<class T> istream& operator>>(istream&i,vector<T>&v){for(T&x:v)i>>x;return i;}
 
 void solve(int tc = 0) {
-    
+    int n; cin >> n;
+    int n; cin >> n;
+    int B = 0;
+    for(int i = 1; i <= n; i++) B += (i+1)/2;
+    cout << B << endl;
 }
 
 int main() {
