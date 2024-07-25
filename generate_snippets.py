@@ -30,5 +30,10 @@ for subdir in os.walk('.'):
 with open('.vscode/cp_snippets.json', 'w') as f:
   f.write(json.dumps(snippets, indent=2))
 
+file = ".vscode/cp_snippets.code-snippets"
+if os.path.isfile(file):
+    os.remove(file)
+    print("Deleted previous snippet to replace with new")
+
 os.rename('.vscode/cp_snippets.json', '.vscode/cp_snippets.code-snippets')
 print('done', file=sys.stderr)
