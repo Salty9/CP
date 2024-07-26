@@ -29,6 +29,6 @@ ios_base::sync_with_stdio(false);
 cin.tie(NULL); cout.tie(NULL);
 
 int tc = 1;
-$1cin >> tc;
+$1//cin >> tc;
 for(int t = 0; t < tc; t++) solve(t);
 }

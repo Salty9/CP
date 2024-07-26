@@ -17,9 +17,10 @@ struct LazySeg {
         seg[ind] *= lazy[ind];
         if (ind < SZ) rep(i,0, 2) lazy[2*ind+i] *= lazy[ind];
         lazy[ind] = Lazy();
-    } // recalc values for current node
+    }
     void pull(int ind) { seg[ind] = seg[2*ind]+seg[2*ind+1]; }
 
+    // CATION: CHOOSE PROPERLY WHETHER UPDATES SHOULD BE SET OR INCREMENTED !!!!!
     void upd(int lo, int hi, Lazy inc, int ind, int L, int R) {
         push(ind); if (hi < L || R < lo) return;
         if (lo <= L && R <= hi) { lazy[ind] = inc; push(ind); return;}
@@ -36,7 +37,21 @@ struct LazySeg {
         return query(lo,hi,2*ind,L,M) + query(lo,hi,2*ind+1,M+1,R);
     }
     Data query(int lo, int hi){ return query(lo, hi, 1, 0, SZ-1);}
-    // 0 based inclusive range for query and upd
+    
+    // 0 based range and index for upd and query, root at 1, 2*ind, 2*ind + 1 children
+    template<class F>
+    int walk(int p, int l, int r, int x, int y, F &&pred) {
+        if (l > y || r < x) return -1;
+        push(p);
+        if (l >= x && r <= y && !pred(seg[p])) return -1;
+        if (r == l) return l;
+        int m = (l + r)/ 2;
+        int res = walk(2*p, l, m, x, y, pred);//find_last: flip res order(right range 1st)
+        if (res == -1) res = walk(2*p + 1, m+1, r, x, y, pred);
+        return res;
+    }
+    template<class F> int walk(int l, int r, F &&pred) { return walk(1, 0, SZ-1, l, r, pred); }
+    // given 0 based inclusive range [x, y], first time pred(use lambda) is true    
 };
 struct Lazy {
     int mx = -1e9;

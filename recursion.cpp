@@ -21,6 +21,15 @@ template<class T> bool ckmax(T& a, T b){ return b > a ? a = b, 1 : 0; }
 template<class T> istream& operator>>(istream&i,vector<T>&v){for(T&x:v)i>>x;return i;}
 
 void solve(int tc = 0) {
+    int n, k; cin >> n >> k;
+    vi a(n), b(n); cin >> a >> b;
+    priority_queue<pii> pq;
+    rep(i, 0, n) pq.push({a, -b});
+
+    lll
+    while(k--){
+
+    }
     
 }
 
