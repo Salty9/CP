@@ -1,3 +1,26 @@
+#ifdef LOCAL
+#include "algo/dbg.hpp"
+#else
+#include "bits/stdc++.h"
+#define dbg(...)
+#endif
+using namespace std;
+
+#define endl '\n'
+#define pb push_back
+#define all(v) v.begin(), v.end()
+#define rep(i,a,b) for (int i = (a); i < (b); ++i)
+#define rrep(i,a,b) for (int i = (a); i >= (b); --i)
+
+typedef long long ll;
+typedef pair<int, int> pii;
+typedef vector<int> vi;
+template<class T> bool ckmin(T& a, T b){ return b < a ? a = b, 1 : 0; }
+template<class T> bool ckmax(T& a, T b){ return b > a ? a = b, 1 : 0; }
+template<class T> istream& operator>>(istream&i,vector<T>&v){for(T&x:v)i>>x;return i;}
+
+const int inf = 1e9;
+
 template<class Lazy, class Info>
 struct LazySeg {
     vector<Lazy> lazy;
@@ -23,10 +46,10 @@ struct LazySeg {
 
     // CATION: CHOOSE PROPERLY WHETHER UPDATES SHOULD BE SET OR INCREMENTED !!!!!
     void upd(int lo, int hi, Lazy inc, int ind, int L, int R) {
-        push(ind); 
+        push(ind);
         if (hi < L || R < lo) return;
         if (lo <= L && R <= hi) { lazy[ind] = inc; push(ind); return;}
-        int M = (L+R)/2; 
+        int M = (L+R)/2;
         upd(lo,hi,inc,2*ind,L,M);
         upd(lo,hi,inc,2*ind+1,M+1,R);
         pull(ind);
@@ -34,14 +57,14 @@ struct LazySeg {
     void upd(int lo, int hi, Lazy inc) { return upd(lo, hi, inc, 1, 0, SZ-1); }
 
     Info query(int lo, int hi, int ind, int L, int R) {
-        push(ind); 
+        push(ind);
         if (lo > R || L > hi) return Info();
         if (lo <= L && R <= hi) return seg[ind];
         int M = (L+R)/2;
         return query(lo,hi,2*ind,L,M) + query(lo,hi,2*ind+1,M+1,R);
     }
     Info query(int lo, int hi){ return query(lo, hi, 1, 0, SZ-1);}
-    
+
     // 0 based range and index for upd and query, root at 1, 2*ind, 2*ind + 1 children
     template<class F>
     int walk(int p, int l, int r, int x, int y, F &&pred) {
@@ -55,7 +78,7 @@ struct LazySeg {
         return res;
     }
     template<class F> int walk(int l, int r, F &&pred) { return walk(1, 0, SZ-1, l, r, pred); }
-    // given 0 based inclusive range [x, y], first time pred(use lambda) is true    
+    // given 0 based inclusive range [x, y], first time pred(use lambda) is true
 };
 struct Lazy {
     int inc;
@@ -79,7 +102,32 @@ struct Info { // info you need to store for each interval
 };
 // range combiner function (Info +) has to be ASSOCIATIVE (to combine Info freely in the recursive call order)
 // update combiner function (Lazy +=) has to be ASSOCIATIVE (to combine updates into one big update)
-// update has to be DISTRIBUTE over range combiner function. 
+// update has to be DISTRIBUTE over range combiner function.
 // upd(Info x) + upd(Info y) = upd(Info x + Info y) eg. min({l,r}+v, {L,R}+v) = min({l,r}, {L,R}) + v
 // allows storing the update on both x and y, on their parent (dont have to push everything to leaf). push/distribute when needed
 
+
+void solve(int tc = 0) {
+    int n; cin >> n;
+    vi a(n); cin >> a;
+    
+    int l = 0, r = n - 1;
+    int lmax = -inf, rmax = -inf;
+    int ans = -1;
+
+    while(l < r){
+        if(a[l++] < lmax) continue;
+        if(a[r--] < rmax) continue;
+        
+        lmax = a[l];
+        rmax = a[r];
+
+        ckmax(ans, (a[l] + a[r])*(r-l));
+    }
+}
+
+signed main() {
+ios_base::sync_with_stdio(false);
+cin.tie(NULL); cout.tie(NULL);
+solve();
+}

@@ -18,31 +18,35 @@ typedef vector<int> vi;
 template<class T> bool ckmin(T& a, T b){ return b < a ? a = b, 1 : 0; }
 template<class T> bool ckmax(T& a, T b){ return b > a ? a = b, 1 : 0; }
 template<class T> istream& operator>>(istream&i,vector<T>&v){for(T&x:v)i>>x;return i;}
+#define uid(a, b) uniform_int_distribution<int>(a, b)(rng)
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 void solve(int tc = 0) {
-    int n, m; cin >> n >> m;
-    vector<vi> g(n+1);
-    vector<pii> eds;
-
-    rep(i, 0, m){
-        int a, b; cin >> a >> b;
-        g[a].pb(b);
-        g[b].pb(a);
-        eds.pb({a, b});
-    }
-
-    vector<int> color(n+1, -1);
-    auto dfs = [&](int u, int c, auto&& dfs) -> void{
-        if(color[u] == (c^1)){
-            cout << -1 << endl; exit(0);
-        }
-        if(color[u] == c) return;
-
-        color[u] = c;
-        for(auto& v: g[u]) dfs(v, c^1, dfs);
-    };
-    for(int i = 1; i <= n; i++) if(color[i] == -1) dfs(i, 0, dfs);
+    int n = uid(3, 10);
+    int m = uid(3, 10);
+    cout << n << " " << m << endl;
+    vi a(n*m);
+    iota(all(a), 1);
+    random_shuffle(all(a));
+    vi b = a;
     
+    rep(i, 0, n){
+        rep(j, 0, m){
+            cout << a.back() << " ";
+            a.pop_back();
+        }
+            cout << endl;
+    }
+    a.resize(n*m);
+    iota(all(a), 1);
+    random_shuffle(all(a));
+    rep(i, 0, n){
+        rep(j, 0, m){
+            cout << a.back() << " ";
+            a.pop_back();
+        }
+            cout << endl;
+    }
 }
 
 signed main() {

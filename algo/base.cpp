@@ -1,11 +1,10 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 #ifdef LOCAL
 #include "algo/dbg.hpp"
 #else
+#include "bits/stdc++.h"
 #define dbg(...)
 #endif
+using namespace std;
 
 #define endl '\n'
 #define pb push_back
@@ -24,7 +23,7 @@ void solve(int tc = 0) {
     $0
 }
 
-int main() {
+signed main() {
 ios_base::sync_with_stdio(false);
 cin.tie(NULL); cout.tie(NULL);
 

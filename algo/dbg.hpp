@@ -1,14 +1,33 @@
 // header file for debugging (for competetive programming)
 // got it from https://codeforces.com/blog/entry/91347
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <map>
+#include <set>
+#include <cassert>
+// #include <stack>
+#include <array>
+#include <queue>
+#include <numeric>
+#include <bitset>
+#include <cmath>
+#include <complex>
+// #include <cstdint>
+// #include <cstring>
+// #include <functional>
+// #include <iomanip>
+#include <chrono>
+#include <random>
 
 template <class T1, class T2>
-ostream &operator<<(ostream &os, const pair<T1, T2> &p) {
+std::ostream &operator<<(std::ostream &os, const std::pair<T1, T2> &p) {
   return os << '{' << p.first << ", " << p.second << '}';
 }
 
-template <class T, class = decay_t<decltype(*begin(declval<T>()))>,
-          class = enable_if_t<!is_same<T, string>::value>>
-ostream &operator<<(ostream &os, const T &c) {
+template <class T, class = std::decay_t<decltype(*begin(std::declval<T>()))>,
+          class = std::enable_if_t<!std::is_same<T, std::string>::value>>
+std::ostream &operator<<(std::ostream &os, const T &c) {
   os << '[';
   for (auto it = c.begin(); it != c.end(); ++it)
     os << &", "[2 * (it == c.begin())] << *it;
@@ -28,4 +47,4 @@ ostream &operator<<(ostream &os, const T &c) {
 //Change output format here
 #define outit(x) #x " = " << x << "; "
 #define dbg(...)                                                              \
-  cerr << "Line " << __LINE__ << ": " FOR_EACH_MACRO(outit, __VA_ARGS__) << "\n"
+  cerr << "\e[91m" << "Line " << __LINE__ << ": " FOR_EACH_MACRO(outit, __VA_ARGS__) << "\e[39m" << "\n"

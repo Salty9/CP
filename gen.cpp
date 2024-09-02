@@ -1,14 +1,10 @@
-#include <iostream>
-#include <vector>
-#include <random>
-#include <chrono>
-using namespace std;
-
 #ifdef LOCAL
 #include "algo/dbg.hpp"
 #else
+#include "bits/stdc++.h"
 #define dbg(...)
 #endif
+using namespace std;
 
 #define endl '\n'
 #define pb push_back
@@ -26,27 +22,22 @@ template<class T> istream& operator>>(istream&i,vector<T>&v){for(T&x:v)i>>x;retu
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 void solve(int tc = 0) {
-    int n = 7;
-    string s = "";
-    rep(i, 0, n) s += to_string(uid(0, 1));
-    cout << s << endl;
-    int q=  uid(1, 10);
-    cout << q << endl;
-    while(q--){
-        int t = uid(1, 2);
-        cout << t << " ";
-        if(t == 2){
-            int l = uid(1, n);
-            int r = uid(l, n);
-            cout << l << " " << r << endl;
-        }else{
-            cout << uid(1, n) << endl;
-        }
+    int n = uid(3, 1e5);
+    int m = uid(1, 100);
+    cout << n << " " << m << endl;
+    rep(i, 0, m){
+        int x = uid(1, n/2);
+        int y = uid(x+1, n);
+        cout << x << " " << y << endl;
     }
+    
 }
 
-int main() {
+signed main() {
 ios_base::sync_with_stdio(false);
 cin.tie(NULL); cout.tie(NULL);
-solve();
+
+int tc = 1;
+//cin >> tc;
+for(int t = 0; t < tc; t++) solve(t);
 }
